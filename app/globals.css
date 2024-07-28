@@ -1,7 +1,6 @@
 @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   :root {
@@ -55,7 +54,7 @@
 }
 
 .underline-after::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   height: 2px; /* Adjust the height of the underline as needed */
@@ -63,8 +62,6 @@
   bottom: -2px; /* Adjust this value to position the underline closer or further from the text */
   left: 0;
 }
-
-
 
 /*  @layer base {*/
 /*    :root {*/
@@ -132,7 +129,6 @@
 /*    }*/
 /*  }*/
 
-
 /*@layer base {*/
 /*  :root {*/
 /*    --background: 0 0% 100%;*/
@@ -187,7 +183,15 @@
 /*}*/
 
 .login {
-  background: #4b6cb7;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #182848, #4b6cb7);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #182848, #4b6cb7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #4b6cb7; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #182848,
+    #4b6cb7
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #182848,
+    #4b6cb7
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
