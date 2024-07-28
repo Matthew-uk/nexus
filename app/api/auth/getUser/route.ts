@@ -32,8 +32,8 @@ export async function GET(req: NextRequest) {
         }
 
         // Send user data without sensitive information like password
-        const { _id, email, firstName, lastName } = user;
-        return NextResponse.json({ id: _id, email, firstName, lastName }, { status: 200 });
+        const { _id, email, firstName, lastName, balance } = user;
+        return NextResponse.json({ id: _id, email, firstName, lastName, balance }, { status: 200 });
     } catch (error) {
         console.error(error);
         return NextResponse.json({ message: 'Internal server error' }, { status: 500 });

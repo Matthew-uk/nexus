@@ -1,13 +1,14 @@
 "use client";
-
 import React, { useEffect, useState } from 'react';
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios"; 
 import Cookies from "js-cookie";
 import Navbar from '@/components/navbar';
 import useUserStore from '@/store/store';
 import { useRouter } from 'next/navigation';
 import UserInfo from '@/components/userInfo';
+import LoadingScreen from '@/components/loading';
+import { getUserData } from '@/utils/getUser';
+import BottomNav from '@/components/bottomNav';
 
 // Type for user data
 export interface UserData {
@@ -15,39 +16,11 @@ export interface UserData {
     email: string;
     firstName: string;
     lastName: string;
+    balance: number;
 }
 
-// Function to fetch user data
-const fetchUserData = async (): Promise<UserData | null> => {
-    const token = Cookies.get("token");
-    if (!token) {
-        return null; // Handle the absence of token outside
-    }
-    const response = await axios.get<UserData>("/api/auth/getUser", {
-        headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-        },
-    });
-    return response.data;
-};
-
-// Loading component
-const Loading: React.FC = () => (
-    <div className="flex justify-center items-center min-h-screen bg-primary">
-        <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 bg-white rounded-full animate-bounce"></div>
-            <div className="w-4 h-4 bg-white rounded-full animate-bounce delay-200"></div>
-            <div className="w-4 h-4 bg-white rounded-full animate-bounce delay-400"></div>
-        </div>
-    </div>
-);
-
-// UserInfo component to display user information
-
-
 const DashboardPage: React.FC = () => {
-    const { setFirstName, setLastName, setId, setEmail } = useUserStore();
+    const { setFirstName, setLastName, setId, setEmail, setBalance } = useUserStore();
     const router = useRouter();
     const [isTokenChecked, setIsTokenChecked] = useState(false);
 
@@ -62,7 +35,7 @@ const DashboardPage: React.FC = () => {
 
     const { data, isLoading, isError, error } = useQuery<UserData | null, Error>({
         queryKey: ["userdata"],
-        queryFn: fetchUserData,
+        queryFn: getUserData,
         enabled: isTokenChecked, // Only run query after token check
     });
 
@@ -72,6 +45,7 @@ const DashboardPage: React.FC = () => {
             setFirstName(data.firstName);
             setLastName(data.lastName);
             setEmail(data.email);
+            setBalance(data.balance);
         }
     }, [data, setId, setFirstName, setLastName, setEmail]);
 
@@ -82,9 +56,10 @@ const DashboardPage: React.FC = () => {
         }
     }, [isError, error, router]);
 
-    if (!isTokenChecked || isLoading) return <Loading />;
+    if (!isTokenChecked || isLoading) return <LoadingScreen />;
 
     if (!data) {
+        router.push("/login");
         // Return null to render nothing in case of no data
         return null;
     }
@@ -92,9 +67,10 @@ const DashboardPage: React.FC = () => {
     return (
         <>
             <Navbar />
-            <div className="flex justify-center items-center min-h-screen bg-gray-100 md:px-36">
-                <UserInfo data={data} />
-            </div>
+                <div className="flex justify-center items-center min-h-screen bg-gray-100 md:px-36">
+                    <UserInfo data={data} />
+                </div>
+            <BottomNav />
         </>
     );
 };

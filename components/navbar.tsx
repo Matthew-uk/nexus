@@ -31,7 +31,7 @@ const Navbar = () => {
 
         
     return (
-        <div className='md:px-36 flex justify-between items-center font-poppins gap-8 py-4'>
+        <div className='md:px-36 hidden md:flex justify-between items-center font-poppins gap-8 py-4'>
             <div>
                 <Image src={Logo} alt='Nexus' className='w-24 h-auto'/>
             </div>

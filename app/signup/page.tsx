@@ -24,6 +24,7 @@ interface SignUpFormInputs {
     email: string;
     password: string;
     confirmPassword: string;
+    referralCode?: string; // Add referralCode as an optional field
 }
 
 const SignUpForm: React.FC = () => {
@@ -125,6 +126,14 @@ const SignUpForm: React.FC = () => {
                                 placeholder="********"
                             />
                             {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>}
+                        </div>
+                        <div className="grid gap-2">
+                            <Label htmlFor="referralCode">Referral Code(Optional)</Label>
+                            <Input
+                                id="referralCode"
+                                placeholder="Referral Code"
+                                {...register('referralCode')}
+                            />
                         </div>
                         <Button type="submit" className="w-full" disabled={isLoading}>
                             {isLoading ? 'Creating account...' : 'Create an account'}
