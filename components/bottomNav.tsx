@@ -8,7 +8,7 @@ const BottomNav = () => {
         <IoWalletOutline size={25} className="cursor-pointer" />
         <IoAddCircleOutline size={25} className="cursor-pointer"/>
         <IoCartOutline size={25} className="cursor-pointer"/>
-        <IoMenu />
+        <IoMenu size={25} className="cursor-pointer"/>
     </div>
   )
 }
