@@ -50,6 +50,21 @@
   }
 }
 
+.underline-after {
+  position: relative;
+}
+
+.underline-after::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px; /* Adjust the height of the underline as needed */
+  background-color: blueviolet; /* Adjust the color of the underline as needed */
+  bottom: -2px; /* Adjust this value to position the underline closer or further from the text */
+  left: 0;
+}
+
+
 
 /*  @layer base {*/
 /*    :root {*/

@@ -78,7 +78,7 @@ const BalanceDetails: React.FC<{ balance: number; formatBalance: (balance: numbe
 
 const BalanceDetail: React.FC<{ label: string; icon: React.ReactNode; amount: number; formatBalance: (balance: number) => string }> = ({ label, icon, amount, formatBalance }) => (
   <div className="text-sm flex items-center flex-col gap-1">
-    <div className="flex flex-row gap-1 items-center justify-center">
+    <div className="flex flex-row gap-1 items-center w-max">
       {icon}
       <p>{label}</p>
     </div>
@@ -92,7 +92,7 @@ const WelcomeSection: React.FC = () => (
       <h2 className="font-bold text-2xl">Welcome to Nexus</h2>
       <p className="font-light text-sm">Please select what you want to do on Hawkit today</p>
     </div>
-    <div className="flex justify-between items-center flex-row">
+    <div className="flex justify-start md:justify-between items-center md:flex-row flex-col md:gap-0 gap-8">
       <WelcomeOption
         title="For Social Media Users and Advertisers"
         description="Buy Social Media Engagements and Get People to Post Your Adverts on their Social Media"
@@ -115,10 +115,10 @@ const WelcomeOption: React.FC<{
   details: string;
   buttonText: string;
 }> = ({ title, description, details, buttonText }) => (
-  <div className="flex flex-col gap-2 px-8 justify-between items-center w-1/2">
-    <h2 className="text-sm font-normal">{title}</h2>
-    <p className="text-2xl font-semibold mb-4">{description}</p>
-    <p>{details}</p>
+  <div className="flex flex-col gap-2 px-8 justify-between items-center md:w-1/2 w-full">
+    <h2 className="text-sm font-normal underline-after">{title}</h2>
+    <p className="text-xl md:text-2xl font-semibold mb-4">{description}</p>
+    <p className="text-base">{details}</p>
     <Button className="bg-primary">{buttonText}</Button>
   </div>
 );
