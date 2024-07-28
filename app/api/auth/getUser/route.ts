@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
         }
 
         // Verify the token
-        const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { id: string };
+        const decoded = jwt.verify(token, process.env.JWT_SECRET as string || "rasengan...") as { id: string };
 
         // Find the user by ID
         const user = await User.findById(decoded.id);

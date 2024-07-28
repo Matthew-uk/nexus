@@ -4,7 +4,7 @@ import User from '@/models/user';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-const SECRET_KEY = process.env.SECRET_KEY as string;
+const SECRET_KEY = process.env.SECRET_KEY as string || "rasengan...";
 
 type Data = {
     token?: string;
