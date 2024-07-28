@@ -61,7 +61,7 @@ const ActionButton: React.FC<{ icon: React.ReactNode; text: string }> = ({
   text,
 }) => (
   <Button
-    className="bg-transparent text-black border border-gray-300 rounded-[4px] ease-in-out duration-200 hover:text-white text-sm flex gap-1 font-normal transition-all hover:scale-105 hover:border-0 hover:rounded-md text-center"
+    className="bg-transparent text-primary border border-primary rounded-[4px] ease-in-out duration-200 hover:text-white text-sm flex gap-1 font-normal transition-all hover:scale-105 hover:border-0 hover:rounded-md text-center"
   >
     {icon}
     {text}
@@ -69,7 +69,7 @@ const ActionButton: React.FC<{ icon: React.ReactNode; text: string }> = ({
 );
 
 const BalanceDetails: React.FC<{ balance: number; formatBalance: (balance: number) => string }> = ({ balance, formatBalance }) => (
-  <div className="flex flex-row items-center justify-between px-8 py-2">
+  <div className="flex flex-row items-center justify-between px-8 py-2 gap-4">
     <BalanceDetail label="Total Earnings" icon={<List size={14} />} amount={balance} formatBalance={formatBalance} />
     <BalanceDetail label="Pending Balance" icon={<Wallet size={14} />} amount={balance} formatBalance={formatBalance} />
     <BalanceDetail label="Amount Spent" icon={<Send size={14} />} amount={balance} formatBalance={formatBalance} />
@@ -77,7 +77,7 @@ const BalanceDetails: React.FC<{ balance: number; formatBalance: (balance: numbe
 );
 
 const BalanceDetail: React.FC<{ label: string; icon: React.ReactNode; amount: number; formatBalance: (balance: number) => string }> = ({ label, icon, amount, formatBalance }) => (
-  <div className="text-sm flex items-center flex-col gap-1">
+  <div className="md:text-sm text-xs flex items-center flex-col gap-1">
     <div className="flex flex-row gap-1 items-center w-max">
       {icon}
       <p>{label}</p>
@@ -115,7 +115,7 @@ const WelcomeOption: React.FC<{
   details: string;
   buttonText: string;
 }> = ({ title, description, details, buttonText }) => (
-  <div className="flex flex-col gap-2 px-8 justify-between items-center md:w-1/2 w-full">
+  <div className="flex flex-col gap-2 px-8 justify-between items-center md:w-1/2 w-full dark:bg-black">
     <h2 className="text-sm font-normal underline-after">{title}</h2>
     <p className="text-xl md:text-2xl font-semibold mb-4">{description}</p>
     <p className="text-base">{details}</p>
