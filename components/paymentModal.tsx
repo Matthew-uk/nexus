@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import axios from "axios";
 import useUserStore from "@/store/store";
 import Logo from "@/img/logo.png";
+import { useRouter } from "next/navigation";
 
 interface PaymentModalComponent {
   text: string;
@@ -37,6 +38,7 @@ const PaymentModal: React.FC<PaymentModalComponent> = ({
   className,
 }) => {
   const { email, firstName, lastName, id } = useUserStore();
+  const router = useRouter();
 
   const {
     register,
@@ -84,9 +86,10 @@ const PaymentModal: React.FC<PaymentModalComponent> = ({
     handleFlutterwavePayment({
       callback: (response) => {
         console.log(response);
-        if (response.status === "completed") {
+        if (response.status === "completed" || "successful") {
           console.log("Payment successful:", response);
           updateUserBalance(data.amount); // Update the user's balance after successful payment
+          router.refresh();
         } else {
           console.log("Payment failed:", response);
         }
