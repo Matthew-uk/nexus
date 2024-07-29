@@ -31,33 +31,33 @@ const BottomNav = () => {
   const currentPath = usePathname();
 
   return (
-    <div className='md:hidden flex justify-between items-center fixed bottom-0 w-full h-[70px] bg-white px-6'>
+    <div className='md:hidden flex justify-between items-center fixed bottom-0 w-full h-[70px] bg-white px-6 shadow-md'>
       <NavComponent
-        icon={<IoHomeOutline size={25} />}
+        icon={<IoHomeOutline size={23} />}
         title='Home'
         active={currentPath === "/dashboard"}
         link='/dashboard'
       />
       <NavComponent
-        icon={<IoWalletOutline size={25} />}
+        icon={<IoWalletOutline size={23} />}
         title='Earn'
         active={currentPath === "/dashboard/earn"}
         link='/dashboard/earn'
       />
       <NavComponent
-        icon={<IoAddCircleOutline size={25} />}
+        icon={<IoAddCircleOutline size={23} />}
         title='Advertise'
         active={currentPath === "/dashboard/advertise"}
         link='/dashboard/advertise'
       />
       <NavComponent
-        icon={<IoCartOutline size={25} />}
+        icon={<IoCartOutline size={23} />}
         title='Market'
         active={currentPath === "/dashboard/market"}
         link='/dashboard/market'
       />
       <NavComponent
-        icon={<IoMenu size={25} />}
+        icon={<IoMenu size={23} />}
         title='More'
         active={currentPath === "/dashboard/more"}
         link='/dashboard/more'

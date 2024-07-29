@@ -5,6 +5,7 @@ import { List, Send, Wallet } from "lucide-react";
 import { Button } from "./ui/button";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import PaymentModal from "./paymentModal";
 
 const UserInfo: React.FC<{ data: UserData }> = ({ data }) => {
   const router = useRouter();
@@ -15,7 +16,11 @@ const UserInfo: React.FC<{ data: UserData }> = ({ data }) => {
   };
 
   const formatBalance = (balance: number) => {
-    return balance.toFixed(2);
+    if (balance <= 0) {
+      return balance.toFixed(2);
+    } else {
+      return balance.toLocaleString();
+    }
   };
 
   return (
@@ -51,7 +56,7 @@ const BalanceSection: React.FC<{
       <h3>My Balance</h3>
       <h2 className='text-xl'>₦{formatBalance(balance)}</h2>
       <div className='flex justify-center items-center gap-4 py-2'>
-        <ActionButton icon={<Wallet size={13} />} text='FUND' />
+        <PaymentModal text={"FUND"} icon={<Wallet size={13} />} />
         <ActionButton icon={<Send size={13} />} text='WITHDRAW' />
       </div>
     </div>
@@ -59,10 +64,10 @@ const BalanceSection: React.FC<{
   </section>
 );
 
-const ActionButton: React.FC<{ icon: React.ReactNode; text: string }> = ({
-  icon,
-  text,
-}) => (
+export const ActionButton: React.FC<{
+  icon: React.ReactNode;
+  text: string;
+}> = ({ icon, text }) => (
   <Button className='bg-transparent text-primary border border-primary rounded-[4px] ease-in-out duration-200 hover:text-white text-sm flex gap-1 font-normal transition-all hover:scale-105 hover:border-0 hover:rounded-md text-center'>
     {icon}
     {text}
