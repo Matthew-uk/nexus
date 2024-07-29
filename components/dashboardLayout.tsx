@@ -18,7 +18,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   return (
     <>
       <Navbar />
-      <div className='flex justify-center items-center min-h-screen bg-gray-100 md:px-36'>
+      <div className='flex justify-center items-center min-h-screen bg-gray-100 md:px-36 font-poppins'>
         {children}
       </div>
       <BottomNav />

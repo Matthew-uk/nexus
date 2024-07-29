@@ -15,10 +15,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import axios from "axios";
 import useUserStore from "@/store/store";
+import Logo from "@/img/logo.png";
 
 interface PaymentModalComponent {
   text: string;
   icon: React.ReactNode;
+  className?: string;
 }
 
 interface FormValues {
@@ -29,7 +31,11 @@ interface FormValues {
   amount: number;
 }
 
-const PaymentModal: React.FC<PaymentModalComponent> = ({ text, icon }) => {
+const PaymentModal: React.FC<PaymentModalComponent> = ({
+  text,
+  icon,
+  className,
+}) => {
   const { email, firstName, lastName, id } = useUserStore();
 
   const {
@@ -114,7 +120,7 @@ const PaymentModal: React.FC<PaymentModalComponent> = ({ text, icon }) => {
       <DialogTrigger asChild className='font-poppins'>
         <Button
           variant='outline'
-          className='bg-transparent text-primary border border-primary rounded-[4px] ease-in-out duration-200 hover:text-white text-sm flex gap-1 font-normal transition-all hover:scale-105 hover:border-0 hover:rounded-md text-center hover:bg-primary'>
+          className={`bg-transparent text-primary border border-primary rounded-[4px] ease-in-out duration-200 hover:text-white text-sm flex gap-1 font-normal transition-all hover:scale-105 hover:border-0 hover:rounded-md text-center hover:bg-primary ${className}`}>
           {icon}
           {text}
         </Button>

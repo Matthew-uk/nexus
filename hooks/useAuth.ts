@@ -6,8 +6,14 @@ import { getUserData, UserData } from "@/utils/getUser";
 import useUserStore from "@/store/store";
 
 export const useAuth = () => {
-  const { setFirstName, setLastName, setId, setEmail, setBalance } =
-    useUserStore();
+  const {
+    setFirstName,
+    setLastName,
+    setId,
+    setEmail,
+    setBalance,
+    setSubscribe,
+  } = useUserStore();
   const router = useRouter();
   const [isTokenChecked, setIsTokenChecked] = useState(false);
 
@@ -45,6 +51,7 @@ export const useAuth = () => {
     setLastName(userData.lastName);
     setEmail(userData.email);
     setBalance(userData.balance);
+    setSubscribe(userData.isSubscribed);
   };
 
   return { isTokenChecked, isLoading, data };

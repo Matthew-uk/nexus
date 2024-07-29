@@ -41,9 +41,9 @@ export async function GET(req: NextRequest) {
     }
 
     // Send user data without sensitive information like password
-    const { _id, email, firstName, lastName, balance } = user;
+    const { _id, email, firstName, lastName, balance, isSubscribed } = user;
     return NextResponse.json(
-      { id: _id, email, firstName, lastName, balance },
+      { id: _id, email, firstName, lastName, balance, isSubscribed },
       { status: 200 },
     );
   } catch (error) {
