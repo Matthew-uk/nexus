@@ -17,6 +17,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import axios from "axios";
 
 interface LoginFormInputs {
   email: string;
@@ -35,28 +36,13 @@ const LoginForm: React.FC = () => {
   const onSubmit = async (data: LoginFormInputs) => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      console.log(response);
-
-      if (response.ok) {
-        const result = await response.json();
-        Cookies.set("token", result.token, { expires: 7 }); // Store token in cookie
-        console.log(result.message); // Optionally display a success message
-        router.push("/dashboard");
-      } else {
-        const errorData = await response.json();
-        console.error(errorData.message); // Display error message
-        alert(errorData.message); // Optionally display an error message to the user
-      }
+      const response = await axios.post("/api/auth/login", data);
+      console.log(response.data);
+      Cookies.set("token", response.data.token, { expires: 1 });
+      router.push("/dashboard");
     } catch (error) {
       console.error("An unexpected error occurred:", error);
-      alert("An unexpected error occurred. Please try again later."); // Optionally display a generic error message to the user
+      alert("An unexpected error occurred. Please try again later.");
     } finally {
       setIsLoading(false);
     }

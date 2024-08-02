@@ -106,7 +106,7 @@ const BalanceDetail: React.FC<{
   amount: number;
   formatBalance: (balance: number) => string;
 }> = ({ label, icon, amount, formatBalance }) => (
-  <div className='md:text-sm text-lg flex items-center flex-col gap-1'>
+  <div className='text-sm flex items-center flex-col gap-1'>
     <div className='flex flex-row gap-1 items-center w-max'>
       {icon}
       <p>{label}</p>
