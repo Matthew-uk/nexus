@@ -41,17 +41,21 @@ const LoginForm: React.FC = () => {
       Cookies.set("token", response.data.token, { expires: 1 });
       router.push("/dashboard");
     } catch (error) {
-      console.error("An unexpected error occurred:", error);
-      alert(
-        error.response.data.message
-          ? error.response.data.message
-          : "An unexpected error occurred. Please try again later.",
-      );
+      if (axios.isAxiosError(error)) {
+        console.error("An unexpected error occurred:", error);
+        alert(
+          error.response?.data?.message
+            ? error.response.data.message
+            : "An unexpected error occurred. Please try again later.",
+        );
+      } else {
+        console.error("An unexpected error occurred:", error);
+        alert("An unexpected error occurred. Please try again later.");
+      }
     } finally {
       setIsLoading(false);
     }
   };
-
   return (
     <div className='flex justify-center items-center min-h-screen font-poppins bg-blue-950 md:px-0 px-4 login'>
       <Card className='mx-auto max-w-sm shadow-2xl shadow-white'>
