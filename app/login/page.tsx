@@ -42,7 +42,11 @@ const LoginForm: React.FC = () => {
       router.push("/dashboard");
     } catch (error) {
       console.error("An unexpected error occurred:", error);
-      alert("An unexpected error occurred. Please try again later.");
+      alert(
+        error.response.data.message
+          ? error.response.data.message
+          : "An unexpected error occurred. Please try again later.",
+      );
     } finally {
       setIsLoading(false);
     }
