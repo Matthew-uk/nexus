@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,7 @@ import axios from "axios";
 import useUserStore from "@/store/store";
 import Logo from "@/img/logo.png";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 interface PaymentModalComponent {
   text: string;
@@ -39,6 +40,7 @@ const PaymentModal: React.FC<PaymentModalComponent> = ({
 }) => {
   const { email, firstName, lastName, id } = useUserStore();
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -55,8 +57,7 @@ const PaymentModal: React.FC<PaymentModalComponent> = ({
   });
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data);
-    // Handle form submission, such as calling PaymentComponent or an API
+    setIsLoading(true);
     handleFlutterPayment(data);
   };
 
@@ -84,19 +85,23 @@ const PaymentModal: React.FC<PaymentModalComponent> = ({
     const handleFlutterwavePayment = useFlutterwave(config);
 
     handleFlutterwavePayment({
-      callback: (response) => {
-        console.log(response);
-        if (response.status === "completed" || "successful") {
+      callback: async (response) => {
+        setIsLoading(false);
+        if (
+          response.status === "successful" ||
+          response.status === "completed"
+        ) {
           router.refresh();
-          console.log("Payment successful:", response);
-          updateUserBalance(data.amount); // Update the user's balance after successful payment
+          toast.success("Payment successful!");
+          await updateUserBalance(data.amount);
         } else {
-          console.log("Payment failed:", response);
+          toast.error("Payment failed. Please try again.");
         }
-        closePaymentModal(); // This will close the modal programmatically
+        closePaymentModal();
       },
       onClose: () => {
-        console.log("Payment modal closed");
+        setIsLoading(false);
+        toast.info("Payment modal closed.");
       },
     });
   };
@@ -109,12 +114,12 @@ const PaymentModal: React.FC<PaymentModalComponent> = ({
       });
 
       if (response.status === 200) {
-        console.log("Balance updated successfully");
+        toast.info("Refresh to reflect balance!");
       } else {
-        console.error("Failed to update balance:", response.data.message);
+        toast.error(`Failed to update balance: ${response.data.message}`);
       }
     } catch (error) {
-      console.error("Error updating balance:", error);
+      toast.error("Error updating balance.");
     }
   };
 
@@ -123,7 +128,8 @@ const PaymentModal: React.FC<PaymentModalComponent> = ({
       <DialogTrigger asChild className='font-poppins'>
         <Button
           variant='outline'
-          className={`bg-transparent text-primary border border-primary rounded-[4px] ease-in-out duration-200 hover:text-white text-sm flex gap-1 font-normal transition-all hover:scale-105 hover:border-0 hover:rounded-md text-center hover:bg-primary ${className}`}>
+          className={`bg-transparent text-primary border border-primary rounded-[4px] ease-in-out duration-200 hover:text-white text-sm flex gap-1 font-normal transition-all hover:scale-105 hover:border-0 hover:rounded-md text-center hover:bg-primary ${className}`}
+          disabled={isLoading}>
           {icon}
           {text}
         </Button>
@@ -235,7 +241,9 @@ const PaymentModal: React.FC<PaymentModalComponent> = ({
             </div>
           </div>
           <DialogFooter>
-            <Button type='submit'>Submit</Button>
+            <Button type='submit' disabled={isLoading}>
+              {isLoading ? "Processing..." : "Submit"}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
