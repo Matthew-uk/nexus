@@ -10,16 +10,19 @@ export interface IUser extends Document {
   referrer: String;
 }
 
-const userSchema: Schema = new Schema({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  referralCode: { type: String, default: null },
-  balance: { type: Number, required: true, default: 0 },
-  isSubscribed: { type: Boolean, default: false },
-  referrer: { type: String, default: null },
-});
+const userSchema: Schema = new Schema(
+  {
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    referralCode: { type: String, default: null },
+    balance: { type: Number, required: true, default: 0 },
+    isSubscribed: { type: Boolean, default: false },
+    referrer: { type: String, default: null },
+  },
+  { timestamps: true },
+);
 
 // Helper function to generate a 6-character alphanumeric referral code
 function generateReferralCode(length: number): string {

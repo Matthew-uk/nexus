@@ -52,14 +52,14 @@ const Navbar = () => {
         </li>
         <li>
           <Link
-            href={"/dashboard"}
+            href={"/dashboard/earn"}
             className='flex flex-row items-center justify-center gap-2'>
             <IoWalletOutline /> Earn
           </Link>
         </li>
         <li>
           <Link
-            href={"/dashboard"}
+            href={"/dashboard/advertise"}
             className='flex flex-row items-center justify-center gap-2'>
             <IoAddCircleOutline />
             Advertise
@@ -67,14 +67,14 @@ const Navbar = () => {
         </li>
         <li>
           <Link
-            href={"/dashboard"}
+            href={"/dashboard/market"}
             className='flex flex-row items-center justify-center gap-2'>
             <IoCartOutline /> Market
           </Link>
         </li>
         <li>
           <Link
-            href={"/dashboard"}
+            href={"/dashboard/more"}
             className='flex flex-row items-center justify-center gap-2'>
             <IoMenu />
             More

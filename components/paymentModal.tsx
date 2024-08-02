@@ -87,9 +87,9 @@ const PaymentModal: React.FC<PaymentModalComponent> = ({
       callback: (response) => {
         console.log(response);
         if (response.status === "completed" || "successful") {
+          router.refresh();
           console.log("Payment successful:", response);
           updateUserBalance(data.amount); // Update the user's balance after successful payment
-          router.refresh();
         } else {
           console.log("Payment failed:", response);
         }
