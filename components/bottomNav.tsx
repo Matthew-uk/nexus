@@ -22,7 +22,7 @@ const NavComponent: React.FC<{
         active ? "text-primary" : "text-black"
       }`}>
       {icon}
-      {title}
+      <p className='text-sm'>{title}</p>
     </Link>
   );
 };
@@ -33,31 +33,31 @@ const BottomNav = () => {
   return (
     <div className='md:hidden flex justify-between items-center fixed bottom-0 w-full h-[70px] bg-white px-6 shadow-md'>
       <NavComponent
-        icon={<IoHomeOutline size={23} />}
+        icon={<IoHomeOutline size={21} />}
         title='Home'
         active={currentPath === "/dashboard"}
         link='/dashboard'
       />
       <NavComponent
-        icon={<IoWalletOutline size={23} />}
+        icon={<IoWalletOutline size={21} />}
         title='Earn'
         active={currentPath === "/dashboard/earn"}
         link='/dashboard/earn'
       />
       <NavComponent
-        icon={<IoAddCircleOutline size={23} />}
+        icon={<IoAddCircleOutline size={21} />}
         title='Advertise'
         active={currentPath === "/dashboard/advertise"}
         link='/dashboard/advertise'
       />
       <NavComponent
-        icon={<IoCartOutline size={23} />}
+        icon={<IoCartOutline size={21} />}
         title='Market'
         active={currentPath === "/dashboard/market"}
         link='/dashboard/market'
       />
       <NavComponent
-        icon={<IoMenu size={23} />}
+        icon={<IoMenu size={21} />}
         title='More'
         active={currentPath === "/dashboard/more"}
         link='/dashboard/more'
