@@ -78,7 +78,7 @@ const BalanceDetails: React.FC<{
   balance: number;
   formatBalance: (balance: number) => string;
 }> = ({ balance, formatBalance }) => (
-  <div className='flex flex-row items-center justify-between px-8 py-2 gap-4'>
+  <div className='flex md:flex-row flex-col items-center justify-between px-8 py-2 gap-4'>
     <BalanceDetail
       label='Total Earnings'
       icon={<List size={14} />}
@@ -106,7 +106,7 @@ const BalanceDetail: React.FC<{
   amount: number;
   formatBalance: (balance: number) => string;
 }> = ({ label, icon, amount, formatBalance }) => (
-  <div className='md:text-sm text-xs flex items-center flex-col gap-1'>
+  <div className='md:text-sm text-lg flex items-center flex-col gap-1'>
     <div className='flex flex-row gap-1 items-center w-max'>
       {icon}
       <p>{label}</p>
