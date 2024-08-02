@@ -18,6 +18,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 interface LoginFormInputs {
   email: string;
@@ -40,17 +41,18 @@ const LoginForm: React.FC = () => {
       console.log(response.data);
       Cookies.set("token", response.data.token, { expires: 1 });
       router.push("/dashboard");
+      toast.success("Login successful!");
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error("An unexpected error occurred:", error);
-        alert(
+        toast.error(
           error.response?.data?.message
             ? error.response.data.message
             : "An unexpected error occurred. Please try again later.",
         );
       } else {
         console.error("An unexpected error occurred:", error);
-        alert("An unexpected error occurred. Please try again later.");
+        toast.error("An unexpected error occurred. Please try again later.");
       }
     } finally {
       setIsLoading(false);

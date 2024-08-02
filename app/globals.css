@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -61,6 +62,20 @@
   background-color: blueviolet; /* Adjust the color of the underline as needed */
   bottom: -2px; /* Adjust this value to position the underline closer or further from the text */
   left: 0;
+}
+
+.Toastify__toast {
+  font-family: "Poppins", sans-serif !important;
+}
+
+.Toastify__toast--success {
+  background-color: #4caf50; /* Customize as needed */
+  color: #fff;
+}
+
+.Toastify__toast--error {
+  background-color: #f44336; /* Customize as needed */
+  color: #fff;
 }
 
 /*  @layer base {*/

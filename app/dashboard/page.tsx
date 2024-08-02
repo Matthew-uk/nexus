@@ -10,6 +10,7 @@ import UserInfo from "@/components/userInfo";
 import LoadingScreen from "@/components/loading";
 import { getUserData } from "@/utils/getUser";
 import BottomNav from "@/components/bottomNav";
+import { toast } from "react-toastify";
 
 // Type for user data
 export interface UserData {
@@ -53,7 +54,7 @@ const DashboardPage: React.FC = () => {
   // Handle errors
   useEffect(() => {
     if (isError) {
-      console.error("Error fetching user data:", error);
+      toast.error("Error fetching user data:");
       router.push("/login");
     }
   }, [isError, error, router]);
