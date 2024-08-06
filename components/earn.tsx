@@ -47,8 +47,8 @@ const Subscribed = () => {
   }, []);
 
   return (
-    <div className='min-h-screen py-8 w-full'>
-      <h2>Engage to earn money on our platform</h2>
+    <div className='min-h-screen py-8 w-full border border-red-400'>
+      {/* <h2>Engage to earn money on our platform</h2> */}
       {/* {tasks.length < 0 && <p>No Task Available right now.</p>} */}
       <Table className='bg-white text-primary shadow-inner text-[0.95em]'>
         <TableCaption>A list of your active social task(s).</TableCaption>
@@ -114,7 +114,7 @@ const EarnComponent = () => {
   }, [isSubscribed]);
 
   return (
-    <div className='font-poppins w-full md:px-0 px-8'>
+    <div className='font-poppins w-full md:px-0 sm:px-4 px-1'>
       {isSubscribed === false ? <NotSubscribed /> : <Subscribed />}
     </div>
   );

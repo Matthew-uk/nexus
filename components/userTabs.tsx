@@ -82,18 +82,21 @@ const UserTableRow: React.FC<User> = ({
 const UserTabs: React.FC = () => {
   const [allUsers, setAllUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   const getAllUsers = async () => {
     setLoading(true);
+    setError(null);
     try {
       const response = await axios.get<User[]>("/api/auth/getAllUsers", {
         headers: {
-          Authorization: "esaduviedede@gmail.com",
+          Authorization: "esaduviedede@gmail.com", // Adjust if needed
         },
       });
       setAllUsers(response.data);
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      setError("Failed to fetch users. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -106,36 +109,46 @@ const UserTabs: React.FC = () => {
   return (
     <Tabs defaultValue='week'>
       <div className='flex items-center'>
+        {/* Uncomment if using multiple tabs */}
         {/* <TabsList>
           <TabsTrigger value='week'>Week</TabsTrigger>
           <TabsTrigger value='month'>Month</TabsTrigger>
           <TabsTrigger value='year'>Year</TabsTrigger>
         </TabsList> */}
-        <div className='ml-auto flex items-center gap-2'>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant='outline' size='sm' className='h-7 gap-1 text-sm'>
-                <ListFilter className='h-3.5 w-3.5' />
-                <span className='sr-only sm:not-sr-only'>Filter</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align='end'>
-              <DropdownMenuLabel>Filter by</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuCheckboxItem checked>
-                Active
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem>Inactive</DropdownMenuCheckboxItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <Button size='sm' variant='outline' className='h-7 gap-1 text-sm'>
-            <File className='h-3.5 w-3.5' />
-            <span className='sr-only sm:not-sr-only'>Export</span>
-          </Button>
-        </div>
+        {loading ? (
+          <p>Loading All Users...</p>
+        ) : error ? (
+          <p>{error}</p>
+        ) : (
+          <div className='ml-auto flex items-center gap-2'>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant='outline'
+                  size='sm'
+                  className='h-7 gap-1 text-sm'>
+                  <ListFilter className='h-3.5 w-3.5' />
+                  <span className='sr-only sm:not-sr-only'>Filter</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align='end'>
+                <DropdownMenuLabel>Filter by</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuCheckboxItem checked>
+                  Active
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem>Inactive</DropdownMenuCheckboxItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <Button size='sm' variant='outline' className='h-7 gap-1 text-sm'>
+              <File className='h-3.5 w-3.5' />
+              <span className='sr-only sm:not-sr-only'>Export</span>
+            </Button>
+          </div>
+        )}
       </div>
       <TabsContent value='week'>
-        <Card x-chunk='dashboard-05-chunk-3'>
+        <Card>
           <CardHeader className='px-7'>
             <CardTitle>Users</CardTitle>
             <CardDescription>Recent users of your application.</CardDescription>
