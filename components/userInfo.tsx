@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { UserData } from "@/app/dashboard/page";
 import { IoPowerSharp } from "react-icons/io5";
-import { List, Send, Wallet } from "lucide-react";
+import { Copy, CopyCheck, List, Send, Wallet } from "lucide-react";
 import { Button } from "./ui/button";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import PaymentModal from "./paymentModal";
+import { toast } from "react-toastify";
+import useUserStore from "@/store/store";
 
 const UserInfo: React.FC<{ data: UserData }> = ({ data }) => {
+  const { referralCode } = useUserStore();
+  console.log(referralCode);
+
   const router = useRouter();
 
   const handleLogout = () => {
@@ -16,17 +21,17 @@ const UserInfo: React.FC<{ data: UserData }> = ({ data }) => {
   };
 
   const formatBalance = (balance: number) => {
-    if (balance <= 0) {
-      return balance.toFixed(2);
-    } else {
-      return balance.toLocaleString();
-    }
+    return balance <= 0 ? balance.toFixed(2) : balance.toLocaleString();
   };
 
   return (
     <div className='w-full min-h-screen flex flex-col gap-1 font-poppins pt-1'>
       <Header firstName={data.firstName} onLogout={handleLogout} />
-      <BalanceSection balance={data.balance} formatBalance={formatBalance} />
+      <BalanceSection
+        balance={data.balance}
+        pendingBalance={data.pendingBalance}
+        formatBalance={formatBalance}
+      />
       <WelcomeSection />
     </div>
   );
@@ -49,22 +54,58 @@ const Header: React.FC<{ firstName: string; onLogout: () => void }> = ({
 
 const BalanceSection: React.FC<{
   balance: number;
+  pendingBalance: number;
   formatBalance: (balance: number) => string;
-}> = ({ balance, formatBalance }) => (
-  <section className='bg-white py-4'>
-    <div className='flex flex-col justify-center items-center gap-4 text-center'>
-      <h3>My Balance</h3>
-      <h2 className='text-xl'>₦{formatBalance(balance)}</h2>
-      <div className='flex justify-center items-center gap-4 py-2'>
-        <PaymentModal text={"FUND"} icon={<Wallet size={13} />} />
-        <ActionButton icon={<Send size={13} />} text='WITHDRAW' />
+}> = ({ balance, formatBalance, pendingBalance }) => {
+  const [copied, setCopied] = useState<boolean>(false);
+  const handleCopyText = (referralCode: string) => {
+    const currentUrl = `${window.location.protocol}//${window.location.host}/signup?ref=${referralCode}`;
+    navigator.clipboard
+      .writeText(currentUrl)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => {
+          setCopied(false);
+        }, 2000);
+        toast.success("Referral link copied");
+      })
+      .catch((err) => {
+        toast.error(`Failed to copy link: ${err.message}`);
+      });
+  };
+  const { referralCode } = useUserStore();
+  return (
+    <section className='bg-white py-4'>
+      <div className='flex flex-col justify-center items-center gap-4 text-center'>
+        <h3>My Balance</h3>
+        <h2 className='text-xl'>₦{formatBalance(balance)}</h2>
+        <div className='flex justify-center items-center gap-4 pt-2'>
+          <PaymentModal text={"FUND"} icon={<Wallet size={13} />} />
+          <ActionButton icon={<Send size={13} />} text='WITHDRAW' />
+        </div>
+        <div className='flex items-center text-center text-primary hover:cursor-pointer'>
+          Refer and Earn ₦200.{" "}
+          {copied ? (
+            <CopyCheck className='ml-4' size={23} />
+          ) : (
+            <Copy
+              className='ml-4'
+              size={20}
+              onClick={() => handleCopyText(referralCode)}
+            />
+          )}
+        </div>
       </div>
-    </div>
-    <BalanceDetails balance={balance} formatBalance={formatBalance} />
-  </section>
-);
+      <BalanceDetails
+        balance={balance}
+        pendingBalance={pendingBalance}
+        formatBalance={formatBalance}
+      />
+    </section>
+  );
+};
 
-export const ActionButton: React.FC<{
+const ActionButton: React.FC<{
   icon: React.ReactNode;
   text: string;
 }> = ({ icon, text }) => (
@@ -75,9 +116,10 @@ export const ActionButton: React.FC<{
 );
 
 const BalanceDetails: React.FC<{
+  pendingBalance: number;
   balance: number;
   formatBalance: (balance: number) => string;
-}> = ({ balance, formatBalance }) => (
+}> = ({ balance, formatBalance, pendingBalance }) => (
   <div className='flex md:flex-row flex-col items-center justify-between px-8 py-2 gap-4'>
     <BalanceDetail
       label='Total Earnings'
@@ -88,7 +130,7 @@ const BalanceDetails: React.FC<{
     <BalanceDetail
       label='Pending Balance'
       icon={<Wallet size={14} />}
-      amount={balance}
+      amount={pendingBalance}
       formatBalance={formatBalance}
     />
     <BalanceDetail

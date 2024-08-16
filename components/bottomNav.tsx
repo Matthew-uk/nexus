@@ -31,7 +31,7 @@ const BottomNav = () => {
   const currentPath = usePathname();
 
   return (
-    <div className='md:hidden flex justify-between items-center fixed bottom-0 w-full h-[70px] bg-white px-6 shadow-md'>
+    <div className='md:hidden flex justify-between items-center fixed bottom-0 w-full h-[70px] bg-white px-6 shadow-md font-poppins'>
       <NavComponent
         icon={<IoHomeOutline size={21} />}
         title='Home'

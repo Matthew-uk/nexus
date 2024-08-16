@@ -9,6 +9,8 @@ export interface UserData {
   lastName: string;
   balance: number;
   isSubscribed: boolean;
+  referralCode: string;
+  pondingBalance: number;
 }
 
 // Function to fetch user data

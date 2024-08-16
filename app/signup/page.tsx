@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
@@ -24,7 +24,7 @@ interface SignUpFormInputs {
   email: string;
   password: string;
   confirmPassword: string;
-  referrer?: string; // Add referralCode as an optional field
+  referrer?: string; // Referral code is optional
 }
 
 const SignUpForm: React.FC = () => {
@@ -33,10 +33,22 @@ const SignUpForm: React.FC = () => {
     handleSubmit,
     formState: { errors },
     watch,
+    setValue,
   } = useForm<SignUpFormInputs>();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const password = watch("password");
+
+  useEffect(() => {
+    // Extract the ref query parameter from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const referrer = urlParams.get("ref");
+
+    // If ref exists, set the referrer field value
+    if (referrer) {
+      setValue("referrer", referrer);
+    }
+  }, [setValue]);
 
   const onSubmit: SubmitHandler<SignUpFormInputs> = async (data) => {
     setIsLoading(true);
@@ -155,7 +167,7 @@ const SignUpForm: React.FC = () => {
               )}
             </div>
             <div className='grid gap-2'>
-              <Label htmlFor='referrer'>Referral Code(Optional)</Label>
+              <Label htmlFor='referrer'>Referral Code (Optional)</Label>
               <Input
                 id='referrer'
                 placeholder='Referral Code'

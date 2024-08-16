@@ -19,11 +19,20 @@ export interface UserData {
   firstName: string;
   lastName: string;
   balance: number;
+  referralCode: string;
+  pendingBalance: number;
 }
 
 const DashboardPage: React.FC = () => {
-  const { setFirstName, setLastName, setId, setEmail, setBalance } =
-    useUserStore();
+  const {
+    setFirstName,
+    setLastName,
+    setId,
+    setEmail,
+    setBalance,
+    setReferralCode,
+    setPendingBalance,
+  } = useUserStore();
   const router = useRouter();
   const [isTokenChecked, setIsTokenChecked] = useState(false);
 
@@ -40,7 +49,7 @@ const DashboardPage: React.FC = () => {
   // Fetch user data
   const { data, isLoading, isError, error } = useQuery<UserData | null, Error>({
     queryKey: ["userdata"],
-    queryFn: getUserData,
+    queryFn: getUserData as () => Promise<UserData | null>, // Type assertion here
     enabled: isTokenChecked, // Only run query after token check
   });
 
@@ -66,6 +75,8 @@ const DashboardPage: React.FC = () => {
     setLastName(userData.lastName);
     setEmail(userData.email);
     setBalance(userData.balance);
+    setReferralCode(userData.referralCode);
+    setPendingBalance(userData.pendingBalance);
   };
 
   if (!isTokenChecked || isLoading) return <LoadingScreen />;

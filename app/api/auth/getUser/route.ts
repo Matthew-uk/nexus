@@ -41,9 +41,27 @@ export async function GET(req: NextRequest) {
     }
 
     // Send user data without sensitive information like password
-    const { _id, email, firstName, lastName, balance, isSubscribed } = user;
+    const {
+      _id,
+      email,
+      firstName,
+      lastName,
+      balance,
+      isSubscribed,
+      referralCode,
+      pendingBalance,
+    } = user;
     return NextResponse.json(
-      { id: _id, email, firstName, lastName, balance, isSubscribed },
+      {
+        id: _id,
+        email,
+        firstName,
+        lastName,
+        balance,
+        isSubscribed,
+        referralCode,
+        pendingBalance,
+      },
       { status: 200 },
     );
   } catch (error) {

@@ -52,6 +52,18 @@ export async function POST(req: NextRequest) {
     // Save the user to the database
     await user.save();
 
+    // Update referrer's balance if referrer is provided
+    if (referrer) {
+      const referrerUser = await User.findOne({ referralCode: referrer });
+      console.log(referrer);
+      console.log("This is the referrer");
+      console.log(referrerUser);
+      if (referrerUser) {
+        referrerUser.pendingBalance += 200; // Adjust according to your schema
+        await referrerUser.save();
+      }
+    }
+
     // Return success response
     return NextResponse.json(
       { message: "User created successfully" },

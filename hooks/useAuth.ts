@@ -13,6 +13,7 @@ export const useAuth = () => {
     setEmail,
     setBalance,
     setSubscribe,
+    setReferralCode,
   } = useUserStore();
   const router = useRouter();
   const [isTokenChecked, setIsTokenChecked] = useState(false);
@@ -52,6 +53,7 @@ export const useAuth = () => {
     setEmail(userData.email);
     setBalance(userData.balance);
     setSubscribe(userData.isSubscribed);
+    setReferralCode(userData.referralCode);
   };
 
   return { isTokenChecked, isLoading, data };

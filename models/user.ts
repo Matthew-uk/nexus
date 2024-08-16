@@ -8,6 +8,7 @@ export interface IUser extends Document {
   referralCode?: string;
   balance: number;
   referrer: String;
+  pendingBalance: Number;
 }
 
 const userSchema: Schema = new Schema(
@@ -18,6 +19,7 @@ const userSchema: Schema = new Schema(
     password: { type: String, required: true },
     referralCode: { type: String, default: null },
     balance: { type: Number, required: true, default: 0 },
+    pendingBalance: { type: Number, required: true, default: 0 },
     isSubscribed: { type: Boolean, default: false },
     referrer: { type: String, default: null },
   },

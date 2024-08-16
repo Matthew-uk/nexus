@@ -3,20 +3,10 @@ import React from "react";
 import { Button } from "./ui/button";
 import {
   RiFacebookCircleFill,
-  RiFacebookFill,
   RiInstagramLine,
   RiTwitterXLine,
 } from "react-icons/ri";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { TableCell, TableRow } from "@/components/ui/table";
 
 interface UserTaskInterface {
   userId: string;
@@ -51,7 +41,7 @@ const UserTask: React.FC<UserTaskInterface> = ({
       <TableCell>{taskTitle}</TableCell>
       {/* <TableCell>{taskDescription}</TableCell> */}
       <TableCell className='text-right'>
-        <Link href={taskLink}>
+        <Link href={taskLink} target='_blank' rel='noopener noreferrer'>
           <Button>Click</Button>
         </Link>
       </TableCell>

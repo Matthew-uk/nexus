@@ -47,7 +47,7 @@ const Subscribed = () => {
   }, []);
 
   return (
-    <div className='min-h-screen py-8 w-full border border-red-400'>
+    <div className='min-h-screen py-8 w-full'>
       {/* <h2>Engage to earn money on our platform</h2> */}
       {/* {tasks.length < 0 && <p>No Task Available right now.</p>} */}
       <Table className='bg-white text-primary shadow-inner text-[0.95em]'>
@@ -62,9 +62,9 @@ const Subscribed = () => {
             </TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody>
-          {tasks.length > 0 ? (
-            tasks.map((task: Task) => (
+        {tasks.length > 0 ? (
+          tasks.map((task: Task) => (
+            <TableBody>
               <UserTask
                 key={task._id}
                 userId={id}
@@ -75,11 +75,16 @@ const Subscribed = () => {
                 taskId={task._id}
                 taskTitle={task.taskName}
               />
-            ))
-          ) : (
-            <p>No Task Available now</p>
-          )}
-        </TableBody>
+            </TableBody>
+          ))
+        ) : (
+          // <p className='w-full'>No Task Available now</p>
+          <TableRow>
+            <TableCell colSpan={3}>
+              <p className='text-center'>No Task Available now</p>
+            </TableCell>
+          </TableRow>
+        )}
         {/* <TableFooter>
             <TableRow>
               <TableCell colSpan={3}>Total</TableCell>
